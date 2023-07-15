@@ -217,6 +217,7 @@
             </section>
 
             <section data-transition="convex">
+                <h4>Tech stack</h4>
                 <img src="./images/js.png" style="height: 150px;">
                 <img src="./images/typescript.png" style="height: 150px;">
                 <img src="./images/nodejs.png" style="height: 150px;">
@@ -238,7 +239,7 @@
                 <img src="./images/gef.png">
             </section>
 
-            
+
         </div>
 
         <div id="toc">
@@ -283,15 +284,18 @@
                 if (index === currentSectionIndex) {
                     listItem.classList.add('current');
                 }
+                if (index === 0) {
+                    listItem.style.display = 'none'; // Oculta o primeiro item do TOC
+                }
                 toc.appendChild(listItem);
 
                 var subsections = section.querySelectorAll('section');
-                if (subsections.length > 1) { // Verifica se há subníveis
+                if (subsections.length > 1) {
                     var sublist = document.createElement('ul');
                     sublist.classList.add('sublist');
                     listItem.appendChild(sublist);
 
-                    for (var subindex = 1; subindex < subsections.length; subindex++) { // Inicia do 1 para ignorar o primeiro elemento do subnível
+                    for (var subindex = 1; subindex < subsections.length; subindex++) {
                         var subsection = subsections[subindex];
                         var subHeading = subsection.querySelector('h4');
                         if (subHeading) {
@@ -314,6 +318,7 @@
                 }
             }
         });
+
 
         Reveal.addEventListener('slidechanged', function (event) {
             currentSectionIndex = event.indexh;
@@ -348,7 +353,15 @@
                     behavior: 'smooth'
                 });
             }
+
+            // Ocultar ou exibir o TOC com base no índice do slide atual
+            if (currentSectionIndex === 0 && currentSubsectionIndex === -1) {
+                document.getElementById('toc').style.display = 'none';
+            } else {
+                document.getElementById('toc').style.display = 'block';
+            }
         });
+
 
         $(document).ready(function () {
             $('.level-1').click(function () {
