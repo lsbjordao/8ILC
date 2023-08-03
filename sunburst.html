@@ -6,8 +6,22 @@
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/highcharts-3d.js"></script>
   <script src="https://code.highcharts.com/modules/sunburst.js"></script>
-  <script src="https://code.highcharts.com/modules/exporting.js"></script>
 </head>
+
+<style>
+  /* Quebra de linha nos rótulos */
+  .highcharts-data-labels text tspan {
+    white-space: pre-line;
+  }
+
+  /* Força todas as fontes a ficarem brancas */
+  .highcharts-data-label {
+    fill: #ffffff !important;
+  }
+  .highcharts-text-outline {
+    stroke: #000000 !important;
+  }
+</style>
 
 <body>
   <div id="container" style="height: 100vh;"></div>
@@ -181,15 +195,6 @@
           height: '50%',
           backgroundColor: '#3a3a3a'
         },
-        exporting: {
-          enabled: true, // Habilita o botão de exportação
-          chartOptions: {
-            chart: {
-              height: 800, // Defina a altura da imagem exportada aqui
-              width: 800   // Defina a largura da imagem exportada aqui
-            }
-          }
-        },
         series: [
           {
             type: 'sunburst',
@@ -200,7 +205,7 @@
               // style: {
               //   fontSize: '10px' // Tamanho da fonte
               // },
-              format: '{point.name}: {point.value}',
+              format: '{point.name}',
               filter: {
                 property: 'innerArcLength',
                 operator: '>',
@@ -213,7 +218,7 @@
                 levelIsConstant: false,
                 dataLabels: {
                   style: {
-                    fontSize: '16px' // Tamanho da fonte
+                    fontSize: '14px' // Tamanho da fonte
                   },
                   filter: {
                     property: 'outerArcLength',
@@ -227,7 +232,7 @@
                 colorByPoint: true,
                 dataLabels: {
                   style: {
-                    fontSize: '16px' // Tamanho da fonte
+                    fontSize: '12px' // Tamanho da fonte
                   }
                 }
               },
@@ -239,7 +244,7 @@
                 },
                 dataLabels: {
                   style: {
-                    fontSize: '15px' // Tamanho da fonte
+                    fontSize: '12px' // Tamanho da fonte
                   }
                 }
               },
@@ -263,7 +268,7 @@
                 },
                 dataLabels: {
                   style: {
-                    fontSize: '11px' // Tamanho da fonte
+                    fontSize: '12px' // Tamanho da fonte
                   }
                 }
               }
