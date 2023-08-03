@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gráfico Sunburst com Highcharts</title>
+  <!-- Inclua os arquivos das bibliotecas Highcharts e Highcharts Sunburst -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+  <script src="https://code.highcharts.com/modules/sunburst.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+
+<body>
+  <div id="container" style="height: 100vh;"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Dados fornecidos
+      var data = [
+        {
+          id: 'Brazil',
+          parent: '',
+          name: 'Brazil',
+          value: 2857
+        },
+        {
+          id: 'Brazil-endemic',
+          parent: 'Brazil',
+          name: 'endemic',
+          value: 1586
+        },
+        {
+          id: 'Brazil-endemic-assessed',
+          parent: 'Brazil-endemic',
+          name: 'assessed',
+          value: 898
+        },
+        {
+          id: 'Brazil-endemic-assessed-threatened',
+          parent: 'Brazil-endemic-assessed',
+          name: 'threatened',
+          value: 255
+        },
+        {
+          id: 'Brazil-endemic-assessed-threatened-EN',
+          parent: 'Brazil-endemic-assessed-threatened',
+          name: 'EN',
+          value: 145,
+          color: 'orange'
+        },
+        {
+          id: 'Brazil-endemic-assessed-threatened-VU',
+          parent: 'Brazil-endemic-assessed-threatened',
+          name: 'VU',
+          value: 73,
+          color: 'yellow'
+        },
+        {
+          id: 'Brazil-endemic-assessed-threatened-CR',
+          parent: 'Brazil-endemic-assessed-threatened',
+          name: 'CR',
+          value: 37,
+          color: 'red'
+        },
+        {
+          id: 'Brazil-endemic-assessed-not-threatened',
+          parent: 'Brazil-endemic-assessed',
+          name: 'not threatened',
+          value: 643
+        },
+        {
+          id: 'Brazil-endemic-assessed-not-threatened-LC',
+          parent: 'Brazil-endemic-assessed-not-threatened',
+          name: 'LC',
+          value: 486,
+          color: 'green'
+        },
+        {
+          id: 'Brazil-endemic-assessed-not-threatened-DD',
+          parent: 'Brazil-endemic-assessed-not-threatened',
+          name: 'DD',
+          value: 112,
+          color: 'gray'
+        },
+        {
+          id: 'Brazil-endemic-assessed-not-threatened-NT',
+          parent: 'Brazil-endemic-assessed-not-threatened',
+          name: 'NT',
+          value: 45,
+          color: 'brown'
+        },
+        {
+          id: 'Brazil-endemic-non-assessed',
+          parent: 'Brazil-endemic',
+          name: 'non assessed',
+          value: 688
+        },
+        {
+          id: 'Brazil-non-endemic',
+          parent: 'Brazil',
+          name: 'non endemic',
+          value: 1271
+        },
+        {
+          id: 'Brazil-non-endemic-assessed',
+          parent: 'Brazil-non-endemic',
+          name: 'assessed',
+          value: 117
+        },
+        {
+          id: 'Brazil-non-endemic-assessed-threatened',
+          parent: 'Brazil-non-endemic-assessed',
+          name: 'threatened',
+          value: 21
+        },
+        {
+          id: 'Brazil-non-endemic-assessed-threatened-EN',
+          parent: 'Brazil-non-endemic-assessed-threatened',
+          name: 'EN',
+          value: 9,
+          color: 'orange'
+        },
+        {
+          id: 'Brazil-non-endemic-assessed-threatened-VU',
+          parent: 'Brazil-non-endemic-assessed-threatened',
+          name: 'VU',
+          value: 8,
+          color: 'yellow'
+        },
+        {
+          id: 'Brazil-non-endemic-assessed-threatened-CR',
+          parent: 'Brazil-non-endemic-assessed-threatened',
+          name: 'CR',
+          value: 4,
+          color: 'red'
+        },
+        {
+          id: 'Brazil-non-endemic-assessed-not-threatened',
+          parent: 'Brazil-non-endemic-assessed',
+          name: 'not threatened',
+          value: 96
+        },
+        {
+          id: 'Brazil-non-endemic-assessed-not-threatened-LC',
+          parent: 'Brazil-non-endemic-assessed-not-threatened',
+          name: 'LC',
+          value: 79,
+          color: 'green'
+        },
+        {
+          id: 'Brazil-non-endemic-assessed-not-threatened-DD',
+          parent: 'Brazil-non-endemic-assessed-not-threatened',
+          name: 'DD',
+          value: 12,
+          color: 'gray'
+        },
+        {
+          id: 'Brazil-non-endemic-assessed-not-threatened-NT',
+          parent: 'Brazil-non-endemic-assessed-not-threatened',
+          name: 'NT',
+          value: 5,
+          color: 'brown'
+        },
+        {
+          id: 'Brazil-non-endemic-non-assessed',
+          parent: 'Brazil-non-endemic',
+          name: 'non assessed',
+          value: 1154
+        },
+        {
+          id: 'World',
+          parent: '',
+          name: 'World',
+          value: 22323
+        }
+      ];
+
+      // Configuração do gráfico Sunburst
+      Highcharts.chart('container', {
+        chart: {
+          type: 'sunburst',
+          height: '50%',
+          backgroundColor: '#3a3a3a'
+        },
+        exporting: {
+          enabled: true, // Habilita o botão de exportação
+          chartOptions: {
+            chart: {
+              height: 800, // Defina a altura da imagem exportada aqui
+              width: 800   // Defina a largura da imagem exportada aqui
+            }
+          }
+        },
+        series: [
+          {
+            type: 'sunburst',
+            data: data,
+            allowDrillToNode: true,
+            cursor: 'pointer',
+            dataLabels: {
+              // style: {
+              //   fontSize: '10px' // Tamanho da fonte
+              // },
+              format: '{point.name}: {point.value}',
+              filter: {
+                property: 'innerArcLength',
+                operator: '>',
+                value: 16
+              }
+            },
+            levels: [
+              {
+                level: 1,
+                levelIsConstant: false,
+                dataLabels: {
+                  style: {
+                    fontSize: '16px' // Tamanho da fonte
+                  },
+                  filter: {
+                    property: 'outerArcLength',
+                    operator: '>',
+                    value: 64
+                  }
+                }
+              },
+              {
+                level: 2,
+                colorByPoint: true,
+                dataLabels: {
+                  style: {
+                    fontSize: '16px' // Tamanho da fonte
+                  }
+                }
+              },
+              {
+                level: 3,
+                colorVariation: {
+                  key: 'brightness',
+                  to: -0.5
+                },
+                dataLabels: {
+                  style: {
+                    fontSize: '15px' // Tamanho da fonte
+                  }
+                }
+              },
+              {
+                level: 4,
+                colorVariation: {
+                  key: 'brightness',
+                  to: 0.5
+                },
+                dataLabels: {
+                  style: {
+                    fontSize: '12px' // Tamanho da fonte
+                  }
+                }
+              },
+              {
+                level: 5,
+                colorVariation: {
+                  key: 'brightness',
+                  to: 0.5
+                },
+                dataLabels: {
+                  style: {
+                    fontSize: '11px' // Tamanho da fonte
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        title: {
+          text: 'Sunburst with Highcharts'
+        }
+      });
+    });
+  </script>
+</body>
+</html>
