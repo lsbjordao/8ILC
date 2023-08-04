@@ -545,7 +545,7 @@
             }
 
             // Ocultar ou exibir o TOC com base no índice do slide atual
-            if (currentSectionIndex === 0 && currentSubsectionIndex === -1) {
+            if (currentSectionIndex === 0 && currentSubsectionIndex === -1 || currentSectionIndex === 12) {
                 document.getElementById('toc').style.display = 'none';
             } else {
                 document.getElementById('toc').style.display = 'block';
